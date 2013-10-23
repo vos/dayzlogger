@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="EpochDB" product="MySQL" version="5.6.14-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.26 ( Revision: ${bzr.revision-id} )" uuid="e0d8f20d-685d-4a01-bd4c-138d2f75b96f">
+    <extra-name-characters>#@</extra-name-characters>
+    <identifier-quote-string>`</identifier-quote-string>
+    <synchronize>true</synchronize>
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://10.0.0.2/dayz_epoch</jdbc-url>
+    <user-name>dayz</user-name>
+    <user-password>dfcedfcbdfd3dfd0</user-password>
+    <schema-pattern>dayz_epoch.*</schema-pattern>
+    <default-schemas>dayz_epoch.*</default-schemas>
+    <libraries>
+      <library>
+        <url>jar://$PROJECT_DIR$/libs/mysql-connector-java-5.1.26-bin.jar!/</url>
+      </library>
+      <library>
+        <url>file://$PROJECT_DIR$/libs/mysql-connector-license.txt</url>
+      </library>
+    </libraries>
+    <schema name="" catalog="dayz_epoch"/>
+    <table name="accesslvl" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="access" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="character_data" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="CharacterID" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="PlayerUID" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="InstanceID" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Datestamp" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="LastLogin" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="Inventory" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="Backpack" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="Worldspace" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <column name="Medical" sqlType="VARCHAR" length="300" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <column name="Alive" sqlType="TINYINT UNSIGNED" length="3" precision="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="Generation" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="LastAte" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="LastDrank" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="KillsZ" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="HeadshotsZ" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="DistanceFoot" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Duration" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="CurrentState" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <column name="KillsH" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Model" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12" def="JyJTdXJ2aXZvcjJfRFoiJw=="/>
+      <column name="KillsB" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Humanity" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MjUwMA=="/>
+      <column name="Infected" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="last_updated" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93" version="true"/>
+      <primary-key name="PRIMARY" columns="CharacterID"/>
+      <index name="Alive" unique="false" columns="Alive"/>
+      <index name="PlayerUID" unique="false" columns="PlayerUID"/>
+    </table>
+    <table name="logs" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="action" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="user" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="timestamp" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93" version="true"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="object_data" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="ObjectID" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="ObjectUID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="Instance" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="Classname" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="Datestamp" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="LastUpdated" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="CharacterID" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Worldspace" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <column name="Inventory" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="Hitpoints" sqlType="VARCHAR" length="512" precision="0" nullable="false" jdbcType="12" def="J1tdJw=="/>
+      <column name="Fuel" sqlType="DOUBLE" length="13" precision="5" nullable="false" jdbcType="8" def="MS4wMDAwMA=="/>
+      <column name="Damage" sqlType="DOUBLE" length="13" precision="5" nullable="false" jdbcType="8" def="MC4wMDAwMA=="/>
+      <primary-key name="PRIMARY" columns="ObjectID"/>
+      <index name="Instance" unique="false" columns="Instance"/>
+      <index name="ObjectUID" unique="false" columns="ObjectUID"/>
+    </table>
+    <table name="player_data" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="PlayerUID" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="PlayerName" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12" def="J051bGwn"/>
+      <column name="PlayerMorality" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="PlayerSex" sqlType="TINYINT UNSIGNED" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="PlayerUID"/>
+    </table>
+    <table name="player_login" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="LoginID" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="PlayerUID" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="CharacterID" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="Datestamp" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="Action" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="LoginID"/>
+    </table>
+    <table name="server_traders" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="classname" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12"/>
+      <column name="instance" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="static" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="desc" sqlType="VARCHAR" length="128" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="trader_items" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="classname" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="BIT" length="0" precision="0" nullable="false" jdbcType="-7"/>
+      <column name="group" sqlType="VARCHAR" length="128" precision="0" nullable="true" jdbcType="12"/>
+      <column name="afile" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="itemsntypes" unique="true" columns="classname,type"/>
+    </table>
+    <table name="trader_tids" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12"/>
+      <column name="trader" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="traders_data" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="item" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" remarks="W0NsYXNzIE5hbWUsMSA9IENmZ01hZ2F6aW5lcyB8IDIgPSBWZWhpY2xlIHwgMyA9IFdlYXBvbl0="/>
+      <column name="qty" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" remarks="YW1vdW50IGluIHN0b2NrIGF2YWlsYWJsZSB0byBidXk="/>
+      <column name="buy" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" remarks="W1tRdHksQ2xhc3MsVHlwZV0sXQ=="/>
+      <column name="sell" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" remarks="W1tRdHksQ2xhc3MsVHlwZV0sXQ=="/>
+      <column name="order" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA==" remarks="IyBzb3J0IG9yZGVyIGZvciBhZGRBY3Rpb24gbWVudQ=="/>
+      <column name="tid" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" remarks="VHJhZGVyIE1lbnUgSUQ="/>
+      <column name="afile" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12" def="J3RyYWRlX2l0ZW1zJw=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="item" unique="true" columns="item,tid"/>
+    </table>
+    <table name="users" schema="" catalog="dayz_epoch" type="TABLE">
+      <column name="id" sqlType="SMALLINT UNSIGNED" length="5" precision="0" nullable="false" jdbcType="5" autoIncrement="true"/>
+      <column name="login" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="password" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="accesslvl" sqlType="VARCHAR" length="16" precision="0" nullable="true" jdbcType="12" def="Jyc="/>
+      <column name="salt" sqlType="CHAR" length="3" precision="0" nullable="false" jdbcType="1" def="Jyc="/>
+      <column name="lastlogin" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="login" unique="true" columns="login"/>
+    </table>
+  </data-source>
+</component>

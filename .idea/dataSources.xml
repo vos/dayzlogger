@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="43986924">
+    <data-source source="LOCAL" name="EpochDB" product="MySQL" version="5.6.14-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.26 ( Revision: ${bzr.revision-id} )" uuid="e0d8f20d-685d-4a01-bd4c-138d2f75b96f">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.0.0.2/dayz_epoch</jdbc-url>
+      <user-name>dayz</user-name>
+      <user-password>dfcedfcbdfd3dfd0</user-password>
+      <schema-pattern>dayz_epoch.*</schema-pattern>
+      <default-schemas>dayz_epoch.*</default-schemas>
+      <libraries>
+        <library>
+          <url>jar://$PROJECT_DIR$/libs/mysql-connector-java-5.1.26-bin.jar!/</url>
+        </library>
+        <library>
+          <url>file://$PROJECT_DIR$/libs/mysql-connector-license.txt</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

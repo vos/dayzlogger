@@ -28,7 +28,7 @@ public class Main {
         String playerUidField = appProps.getProperty("player_uid_field");
         String lastUpdatedField = appProps.getProperty("last_updated_field");
         String aliveField = appProps.getProperty("alive_field");
-        String queryFields = appProps.getProperty("query_fields");
+        String logFields = appProps.getProperty("log_fields");
 
         long startTimeDiff = Integer.parseInt(appProps.getProperty("start_time_diff")) * 1000; // ms
         int waitTime = Integer.parseInt(appProps.getProperty("wait_time")) * 1000; // ms
@@ -48,7 +48,7 @@ public class Main {
         System.out.println("timeDiff = " + timeDiff);
 
         String charQuery = String.format("SELECT %s, %s, %s FROM %s WHERE %s=1 AND %s > ?",
-                playerUidField, lastUpdatedField, queryFields, characterDataTable, aliveField, lastUpdatedField);
+                playerUidField, lastUpdatedField, logFields, characterDataTable, aliveField, lastUpdatedField);
         PreparedStatement charStatement = con.prepareStatement(charQuery);
 
         long time = System.currentTimeMillis() - startTimeDiff;

@@ -4,7 +4,6 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -78,7 +77,6 @@ public class Logger {
                 Timestamp lastUpdated = charResultSet.getTimestamp(2);
                 String lastUpdatedStr = lastUpdated.toString(); // yyyy-mm-dd hh:mm:ss.fffffffff
                 String lastUpdatedDate = lastUpdatedStr.substring(0, 10); // yyyy-mm-dd
-                String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
 
                 log.debug("===============================");
                 log.debug("PlayerUID = {}", playerUid);
@@ -101,19 +99,22 @@ public class Logger {
                     charDataMap.put(playerUid, charData);
 
                     Path logFileDir = logDir.resolve(lastUpdatedDate);
-                    if (!Files.isDirectory(logFileDir)) {
-                        Files.createDirectories(logFileDir);
-                    }
                     try {
                         charData.openLogWriter(logFileDir);
                     } catch (IOException e) {
                         log.error("cannot open log writer " + charData.getLogFileName(), e);
                     }
-                    // TODO: rotate log file dir when date changes
+                } else if (!lastUpdatedDate.equals(charData.getLogFileName().getParent().getFileName().toString())) {
+                    // date changed => rotate log file dir
+                    Path logFileDir = logDir.resolve(lastUpdatedDate);
+                    try {
+                        charData.rotateLogFile(logFileDir);
+                    } catch (IOException e) {
+                        log.error("cannot rotate log file " + charData.getLogFileName(), e);
+                    }
                 }
                 charData.setLastUpdated(lastUpdated);
 
-                boolean charValueChanged = false;
                 // skip PlayerUID and LastUpdated fields
                 for (int i = 3; i <= columnCount; i++) {
                     String value = charResultSet.getString(i);
@@ -123,12 +124,10 @@ public class Logger {
                         log.trace("{}[{}] = {}", columnName, columnTypeName, value);
                     }
                     int charValueIndex = i - 3;
-                    if (!value.equals(charData.getValue(charValueIndex))) {
-                        charData.setValue(charValueIndex, value);
-                        charValueChanged = true;
-                    }
+                    charData.setValue(charValueIndex, value);
                 }
-                if (charValueChanged) {
+                if (charData.hasChanged()) {
+                    String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
                     try {
                         charData.writeLogData(lastUpdatedTime);
                     } catch (IOException e) {

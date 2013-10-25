@@ -18,8 +18,8 @@ public class CharData {
     private Timestamp lastUpdated;
     private final String[] values;
 
-    // TODO
-    private String[] oldValues;
+    private final String[] previousValues;
+    private boolean changed;
 
     private Path logFileName;
     private BufferedWriter logWriter;
@@ -44,6 +44,8 @@ public class CharData {
         this.logger = logger;
         this.playerUid = playerUid;
         values = new String[valueCount];
+        previousValues = new String[valueCount];
+        changed = false;
     }
 
     public String getValue(int index) {
@@ -51,12 +53,25 @@ public class CharData {
     }
 
     public void setValue(int index, String value) {
-        values[index] = value;
+        previousValues[index] = values[index];
+        if (!value.equals(values[index])) {
+            values[index] = value;
+            changed = true;
+        }
+    }
+
+    public boolean hasChanged() {
+        return changed;
     }
 
     public void openLogWriter(Path logFileDir) throws IOException {
+        // create directories if necessary
+        if (!Files.isDirectory(logFileDir)) {
+            Files.createDirectories(logFileDir);
+        }
         logFileName = logFileDir.resolve(playerUid + LOG_FILE_EXTENSION);
-        logWriter = Files.newBufferedWriter(logFileName, LOG_FILE_CHARSET, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
+        logWriter = Files.newBufferedWriter(logFileName, LOG_FILE_CHARSET,
+                StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
     public void writeLogData(String timestamp) throws IOException {
@@ -64,16 +79,39 @@ public class CharData {
         logWriter.write(logger.config.logValueSeparator);
         for (int i = 0; i < values.length; i++) {
             String value = values[i];
-            logWriter.write(value);
+            if (logger.config.usePruning && value.equals(previousValues[i])) {
+                if (!logger.config.pruningPlaceholder.isEmpty()) {
+                    logWriter.write(logger.config.pruningPlaceholder);
+                }
+            } else {
+                logWriter.write(value);
+            }
             if (i != values.length - 1) {
                 logWriter.write(logger.config.logValueSeparator);
             }
         }
         logWriter.newLine();
         logWriter.flush();
+        changed = false;
     }
 
     public void closeLogWriter() throws IOException {
         logWriter.close();
+        logWriter = null;
+    }
+
+    public void rotateLogFile(Path logFileDir) throws IOException {
+        closeLogWriter();
+        // reset all values so the new log file will start fresh with the first entry
+        resetValues();
+        openLogWriter(logFileDir);
+    }
+
+    private void resetValues() {
+        for (int i = 0; i < values.length; i++) {
+            values[i] = null;
+            previousValues[i] = null;
+        }
+        changed = false;
     }
 }

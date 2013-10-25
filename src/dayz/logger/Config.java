@@ -25,6 +25,9 @@ public class Config {
     public String logDir;
     public String logValueSeparator;
 
+    public boolean usePruning;
+    public String pruningPlaceholder;
+
     public long cleanupDelay;
 
     private void load(String fileName) throws IOException {
@@ -58,6 +61,9 @@ public class Config {
 
         logDir = userProps.getProperty("log_dir");
         logValueSeparator = userProps.getProperty("log_value_separator");
+
+        usePruning = Boolean.parseBoolean(userProps.getProperty("use_pruning"));
+        pruningPlaceholder = userProps.getProperty("pruning_placeholder");
 
         cleanupDelay = Integer.parseInt(userProps.getProperty("cleanup_delay")) * 60_000; // ms
     }

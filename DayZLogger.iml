@@ -7,7 +7,9 @@
       <sourceFolder url="file://$MODULE_DIR$/res" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="mysql-connector" level="project" />
+    <orderEntry type="library" name="slf4j" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="logback" level="project" />
+    <orderEntry type="library" name="mysql" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

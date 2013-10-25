@@ -3,17 +3,19 @@ package dayz.logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Logger {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Logger.class);
 
-    private final Config config;
+    final Config config;
     private final Map<String, CharData> charDataMap;
 
     public Logger(Config config) {
@@ -43,7 +45,6 @@ public class Logger {
         PreparedStatement charStatement = con.prepareStatement(charQuery);
 
         Path logDir = Paths.get(config.logDir);
-        CharData.setLogValueSeparator(config.logValueSeparator);
         long time = System.currentTimeMillis() - config.startTimeDiff;
         ResultSetMetaData metaData = null;
         int columnCount = 0;
@@ -96,15 +97,19 @@ public class Logger {
 
                 CharData charData = charDataMap.get(playerUid);
                 if (charData == null) {
-                    charData = new CharData(playerUid, columnCount - 2);
+                    charData = new CharData(this, playerUid, columnCount - 2);
                     charDataMap.put(playerUid, charData);
 
                     Path logFileDir = logDir.resolve(lastUpdatedDate);
                     if (!Files.isDirectory(logFileDir)) {
                         Files.createDirectories(logFileDir);
                     }
-                    charData.openLogWriter(logFileDir);
-                    // TODO: update log file dir when date changes
+                    try {
+                        charData.openLogWriter(logFileDir);
+                    } catch (IOException e) {
+                        log.error("cannot open log writer " + charData.getLogFileName(), e);
+                    }
+                    // TODO: rotate log file dir when date changes
                 }
                 charData.setLastUpdated(lastUpdated);
 
@@ -124,17 +129,22 @@ public class Logger {
                     }
                 }
                 if (charValueChanged) {
-                    charData.writeLogData(lastUpdatedTime);
+                    try {
+                        charData.writeLogData(lastUpdatedTime);
+                    } catch (IOException e) {
+                        log.error("error while writing log data to " + charData.getLogFileName(), e);
+                    }
                 } else {
                     log.debug("no char value changed => do not log");
                 }
             }
 
-            // TODO
-            //charCleanup();
+            profiler.start("cleanup");
+            cleanup(timestamp);
 
             profiler.stop();
             profiler.log();
+
             long waitTime = config.waitTime - profiler.elapsedTime() / 1_000_000; // ms
             log.debug("waitTime = {} ms", waitTime);
             if (waitTime > 0) {
@@ -146,7 +156,21 @@ public class Logger {
         con.close();
     }
 
-    private void charCleanup() {
-        // TODO: cleanup
+    private void cleanup(Timestamp timestamp) {
+        long time = timestamp.getTime();
+        Iterator<Map.Entry<String, CharData>> charDataIterator = charDataMap.entrySet().iterator();
+        while (charDataIterator.hasNext()) {
+            Map.Entry<String, CharData> charDataEntry = charDataIterator.next();
+            CharData charData = charDataEntry.getValue();
+            if (time - charData.getLastUpdated().getTime() > config.cleanupDelay) {
+                log.debug("cleanup of PlayerUID = {}", charData.getPlayerUid());
+                try {
+                    charData.closeLogWriter();
+                } catch (IOException e) {
+                    log.error("cannot close log writer " + charData.getLogFileName(), e);
+                }
+                charDataIterator.remove();
+            }
+        }
     }
 }

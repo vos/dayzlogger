@@ -25,7 +25,7 @@ public class Config {
     public String logDir;
     public String logValueSeparator;
 
-    public long cleanupInterval;
+    public long cleanupDelay;
 
     private void load(String fileName) throws IOException {
         this.fileName = fileName;
@@ -59,7 +59,7 @@ public class Config {
         logDir = userProps.getProperty("log_dir");
         logValueSeparator = userProps.getProperty("log_value_separator");
 
-        cleanupInterval = Integer.parseInt(userProps.getProperty("cleanup_interval")) * 60_000; // ms
+        cleanupDelay = Integer.parseInt(userProps.getProperty("cleanup_delay")) * 60_000; // ms
     }
 
     public static Config loadFromFile(String fileName) throws IOException {

@@ -12,19 +12,14 @@ public class CharData {
     public static final Charset LOG_FILE_CHARSET = Charset.forName("UTF-8");
     public static final String LOG_FILE_EXTENSION = ".log";
 
-    private static String logValueSeparator;
-
-    public static String getLogValueSeparator() {
-        return logValueSeparator;
-    }
-
-    public static void setLogValueSeparator(String logValueSeparator) {
-        CharData.logValueSeparator = logValueSeparator;
-    }
+    private final Logger logger;
 
     private final String playerUid;
     private Timestamp lastUpdated;
     private final String[] values;
+
+    // TODO
+    private String[] oldValues;
 
     private Path logFileName;
     private BufferedWriter logWriter;
@@ -45,7 +40,8 @@ public class CharData {
         return logFileName;
     }
 
-    public CharData(String playerUid, int valueCount) {
+    public CharData(Logger logger, String playerUid, int valueCount) {
+        this.logger = logger;
         this.playerUid = playerUid;
         values = new String[valueCount];
     }
@@ -65,12 +61,12 @@ public class CharData {
 
     public void writeLogData(String timestamp) throws IOException {
         logWriter.write(timestamp);
-        logWriter.write(logValueSeparator);
+        logWriter.write(logger.config.logValueSeparator);
         for (int i = 0; i < values.length; i++) {
             String value = values[i];
             logWriter.write(value);
             if (i != values.length - 1) {
-                logWriter.write(logValueSeparator);
+                logWriter.write(logger.config.logValueSeparator);
             }
         }
         logWriter.newLine();

@@ -133,12 +133,12 @@ public class Logger {
                 }
                 if (charData.hasChanged()) {
                     String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
-                    log.trace("writing log entry: {}", charData.getLogFileName());
+                    log.trace("writing log entry to {}", charData.getLogFileName());
                     try {
                         charData.writeLogData(lastUpdatedTime);
                         logCount++;
                     } catch (IOException e) {
-                        log.error("error while writing log data to " + charData.getLogFileName(), e);
+                        log.error("error while writing log entry to " + charData.getLogFileName(), e);
                     }
                 } else {
                     log.debug("no char value changed => do not log");
@@ -173,6 +173,7 @@ public class Logger {
                 log.debug("cleanup of PlayerUID = {}", charData.getPlayerUid());
                 try {
                     charData.closeLogWriter();
+                    log.debug("log file closed: {}", charData.getLogFileName());
                 } catch (IOException e) {
                     log.error("cannot close log writer " + charData.getLogFileName(), e);
                 }

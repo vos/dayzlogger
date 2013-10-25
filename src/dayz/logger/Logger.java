@@ -103,6 +103,7 @@ public class Logger {
                     Path logFileDir = logDir.resolve(lastUpdatedDate);
                     try {
                         charData.openLogWriter(logFileDir);
+                        log.debug("log file opened: {}", charData.getLogFileName());
                     } catch (IOException e) {
                         log.error("cannot open log writer " + charData.getLogFileName(), e);
                     }
@@ -110,7 +111,9 @@ public class Logger {
                     // date changed => rotate log file dir
                     Path logFileDir = logDir.resolve(lastUpdatedDate);
                     try {
+                        Path oldLogFileName = charData.getLogFileName();
                         charData.rotateLogFile(logFileDir);
+                        log.debug("log file rotated: {} -> {}", oldLogFileName, charData.getLogFileName());
                     } catch (IOException e) {
                         log.error("cannot rotate log file " + charData.getLogFileName(), e);
                     }
@@ -130,8 +133,8 @@ public class Logger {
                 }
                 if (charData.hasChanged()) {
                     String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
+                    log.trace("writing log entry: {}", charData.getLogFileName());
                     try {
-                        log.trace("writing log entry: {}", charData.getLogFileName());
                         charData.writeLogData(lastUpdatedTime);
                         logCount++;
                     } catch (IOException e) {

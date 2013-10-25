@@ -24,6 +24,7 @@ public class Config {
 
     public String logDir;
     public String logValueSeparator;
+    public boolean autoFlush;
 
     public boolean usePruning;
     public String pruningPlaceholder;
@@ -61,6 +62,7 @@ public class Config {
 
         logDir = userProps.getProperty("log_dir");
         logValueSeparator = userProps.getProperty("log_value_separator");
+        autoFlush = Boolean.parseBoolean(userProps.getProperty("auto_flush"));
 
         usePruning = Boolean.parseBoolean(userProps.getProperty("use_pruning"));
         pruningPlaceholder = userProps.getProperty("pruning_placeholder");

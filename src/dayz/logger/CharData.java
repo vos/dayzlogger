@@ -91,7 +91,9 @@ public class CharData {
             }
         }
         logWriter.newLine();
-        logWriter.flush();
+        if (logger.config.autoFlush) {
+            logWriter.flush();
+        }
         changed = false;
     }
 

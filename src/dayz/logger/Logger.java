@@ -63,6 +63,7 @@ public class Logger {
             log.debug("timestamp = {}", timestamp);
 
             charStatement.setTimestamp(1, timestamp);
+            log.info("querying character updates");
             log.debug("{}", charStatement);
             ResultSet charResultSet = charStatement.executeQuery();
 
@@ -72,6 +73,7 @@ public class Logger {
             }
 
             profiler.start("log");
+            int logCount = 0;
             while (charResultSet.next()) {
                 String playerUid = charResultSet.getString(1);
                 Timestamp lastUpdated = charResultSet.getTimestamp(2);
@@ -129,7 +131,9 @@ public class Logger {
                 if (charData.hasChanged()) {
                     String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
                     try {
+                        log.trace("writing log entry: {}", charData.getLogFileName());
                         charData.writeLogData(lastUpdatedTime);
+                        logCount++;
                     } catch (IOException e) {
                         log.error("error while writing log data to " + charData.getLogFileName(), e);
                     }
@@ -137,6 +141,7 @@ public class Logger {
                     log.debug("no char value changed => do not log");
                 }
             }
+            log.info("{} log entries have been written", logCount);
 
             profiler.start("cleanup");
             cleanup(timestamp);

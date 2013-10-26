@@ -56,6 +56,7 @@ public class Logger {
 
             if (log.isDebugEnabled()) {
                 localTimestamp = new Timestamp(time);
+                log.debug("================================");
                 log.debug("localTimestamp = {}", localTimestamp);
             }
             Timestamp timestamp = new Timestamp(time + timeDiff);
@@ -64,7 +65,7 @@ public class Logger {
 
             charStatement.setTimestamp(1, timestamp);
             log.info("querying character updates");
-            log.debug("{}", charStatement);
+            log.trace("{}", charStatement);
             ResultSet charResultSet = charStatement.executeQuery();
 
             if (metaData == null) {
@@ -80,18 +81,18 @@ public class Logger {
                 String lastUpdatedStr = lastUpdated.toString(); // yyyy-mm-dd hh:mm:ss.fffffffff
                 String lastUpdatedDate = lastUpdatedStr.substring(0, 10); // yyyy-mm-dd
 
-                log.debug("===============================");
+                log.debug("================");
                 log.debug("PlayerUID = {}", playerUid);
                 log.debug("LastUpdated = {}", lastUpdatedStr);
 
                 // player debug
-                if (log.isDebugEnabled()) {
+                if (log.isTraceEnabled()) {
                     PreparedStatement playerStatement = con.prepareStatement("SELECT PlayerName FROM player_data WHERE PlayerUID = ?");
                     playerStatement.setString(1, playerUid);
                     ResultSet playerResultSet = playerStatement.executeQuery();
                     playerResultSet.first();
                     String playerName = playerResultSet.getString(1);
-                    log.debug("PlayerName = {}", playerName);
+                    log.trace("PlayerName = {}", playerName);
                     playerStatement.close();
                 }
 
@@ -133,7 +134,7 @@ public class Logger {
                 }
                 if (charData.hasChanged()) {
                     String lastUpdatedTime = lastUpdatedStr.substring(11, 19); // hh:mm:ss
-                    log.trace("writing log entry to {}", charData.getLogFileName());
+                    log.debug("writing log entry to {}", charData.getLogFileName());
                     try {
                         charData.writeLogData(lastUpdatedTime);
                         logCount++;
@@ -153,7 +154,7 @@ public class Logger {
             profiler.log();
 
             long waitTime = config.waitTime - profiler.elapsedTime() / 1_000_000; // ms
-            log.debug("waitTime = {} ms", waitTime);
+            log.trace("waitTime = {} ms", waitTime);
             if (waitTime > 0) {
                 Thread.sleep(waitTime);
             }

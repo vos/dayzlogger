@@ -8,7 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="slf4j" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="logback" level="project" />
+    <orderEntry type="library" name="logback" level="project" />
     <orderEntry type="library" name="mysql" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

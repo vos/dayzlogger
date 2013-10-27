@@ -31,6 +31,8 @@ public class Config {
 
     public long cleanupDelay;
 
+    public String playerNameQuery;
+
     private void load(String fileName) throws IOException {
         this.fileName = fileName;
 
@@ -68,6 +70,8 @@ public class Config {
         pruningPlaceholder = userProps.getProperty("pruning_placeholder");
 
         cleanupDelay = Integer.parseInt(userProps.getProperty("cleanup_delay")) * 60_000; // ms
+
+        playerNameQuery = userProps.getProperty("player_name_query");
     }
 
     public static Config loadFromFile(String fileName) throws IOException {

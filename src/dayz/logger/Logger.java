@@ -87,7 +87,7 @@ public class Logger {
 
                 // player debug
                 if (log.isTraceEnabled()) {
-                    PreparedStatement playerStatement = con.prepareStatement("SELECT PlayerName FROM player_data WHERE PlayerUID = ?");
+                    PreparedStatement playerStatement = con.prepareStatement(config.playerNameQuery);
                     playerStatement.setString(1, playerUid);
                     ResultSet playerResultSet = playerStatement.executeQuery();
                     playerResultSet.first();

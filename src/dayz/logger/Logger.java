@@ -28,7 +28,7 @@ public class Logger {
         Connection con = DriverManager.getConnection(dbUrl, config.dbUser, config.dbPass);
 
         // compute time difference between this machine and the database server
-        Timestamp localTimestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp localTimestamp = new Timestamp((System.currentTimeMillis() / 1000) * 1000); // cut milliseconds off
         ResultSet timestampResultSet = con.createStatement().executeQuery("SELECT CURRENT_TIMESTAMP");
         timestampResultSet.next();
         Timestamp serverTimestamp = timestampResultSet.getTimestamp(1);

@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Level;
 import org.slf4j.LoggerFactory;
 
 public class Main {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
         System.out.println("DayZ Logger v1.0 beta");

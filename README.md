@@ -26,7 +26,7 @@ All options have default values, for more information take a look at the provide
 The application can be started from the console like any other JAR file, or use one of the provided Windows BAT files to let it detect your JRE installation and launch it like any Windows application.
 
 ```
-java -jar DayZLogger.jar [-c <filename>] [-d <debug-level>}
+java -jar DayZLogger.jar [-c <filename>] [-d <debug-level>]
 ```
 The filename can be any valid filename or path to a filename relative to your working directory.
 The debug-level can be used to get more detailed messages shown in the console window, valid values are:

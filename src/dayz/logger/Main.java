@@ -7,7 +7,7 @@ public class Main {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
-        System.out.println("DayZ Logger v0.1 beta");
+        System.out.println("DayZ Logger v1.0 beta");
 
         String logLevelName = getArgument(args, "-d", null);
         if (logLevelName != null) {

@@ -19,7 +19,7 @@ ALTER TABLE `character_data` ADD `LastUpdated` TIMESTAMP on update CURRENT_TIMES
 Just extract the ZIP file anywhere on your local hard drive.
 
 ### Config file
-Many options and default behavious can be changed with the provided config file (default name config.cfg).
+Many options and default behaviours can be changed with the provided config file (default name config.cfg).
 All options have default values, for more information take a look at the provided config.cfg as an example.
 
 ## Startup and command line arguments
@@ -49,3 +49,8 @@ It is recommended to run DayZ Logger on the DayZ database server itself. If you 
 DayZ Logger is a light weight application, it has almost no CPU impact and a small memory profile as it only caches the current and last values of every player currently playing on the DayZ server and file handles to each log file. Log files will be kept open for appending data until the cleanup routine will close it and remove the player from the cache after an configurable idle time (default 15 minutes).
 
 With data pruning enabled (disabled by default, see config file) the storage consumption is about 100 KB a day for every active player (about 5 MB with 50 active players each day). Furthermore old logs can be archived or removed to compress the data even more.
+
+## Copyright and License
+Copyright (c) 2013 Alexander Vos.
+
+Distributed under the The MIT License (MIT).  See the LICENSE file for more information.

@@ -90,9 +90,12 @@ public class Logger {
                     PreparedStatement playerStatement = con.prepareStatement(config.playerNameQuery);
                     playerStatement.setString(1, playerUid);
                     ResultSet playerResultSet = playerStatement.executeQuery();
-                    playerResultSet.first();
-                    String playerName = playerResultSet.getString(1);
-                    log.trace("PlayerName = {}", playerName);
+                    if (playerResultSet.next()) {
+                        String playerName = playerResultSet.getString(1);
+                        log.trace("PlayerName = {}", playerName);
+                    } else {
+                        log.warn("player name not found for PlayerUID = {}", playerUid);
+                    }
                     playerStatement.close();
                 }
 
